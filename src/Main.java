@@ -25,6 +25,16 @@ public class Main {
         int d3 = Integer.parseInt(f3.strip());
         int d4 = Integer.parseInt(f4.strip());
 
+        if(d1==d3){
+            System.out.println("These points are on a vertical line: x="+d1);
+            System.exit(0);
+        }
+        if(d2==d4){
+            System.out.println("These points are on a horizontal line: x="+d2);
+            System.exit(0);
+        }
+
+
         obj.test(d1,d2,d3,d4);
 
         System.out.println(obj.lineInfo());
@@ -32,6 +42,7 @@ public class Main {
 
         System.out.print("enter an x value: ");
         Double cc = ab.nextDouble();
+        System.out.println(obj.coordinateForX(cc));
 
     }
 }
