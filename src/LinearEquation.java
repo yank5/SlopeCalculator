@@ -82,7 +82,7 @@ public LinearEquation(int x1, int y1, int x2, int y2)
                 } else {
                         DD = '-';
                 }
-               return +slope()+"x"+DD+(Math.abs(yIntercept()));
+               return "y = "+slope()+"x"+DD+(Math.abs(yIntercept()));
         }
 
 
@@ -92,7 +92,7 @@ public LinearEquation(int x1, int y1, int x2, int y2)
         /* Returns a String of the coordinate point on the line that has the given x value, with
            both x and y coordinates as decimals to the nearest hundredth, e.g (-5.0, 6.75) */
         public String coordinateForX(double xValue){
-                return "("+xValue+", "+((slope()*xValue)+yIntercept())+")";
+                return "("+xValue+", "+roundedToHundredth(((slope()*xValue)+yIntercept()))+")";
         }
 
 
