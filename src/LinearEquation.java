@@ -120,15 +120,14 @@ public LinearEquation(int x1, int y1, int x2, int y2)
          */
 
         public String equation(){
-                if(yIntercept()!=0)
-                        if(yIntercept()>0)
-                                return "y = "+slope()+"x "+"+ "+yIntercept();
-                        else return "y = "+slope()+"x "+"- "+Math.abs(yIntercept());
-                else return null;
+                if(yIntercept()!=0) {
+                        if (yIntercept() > 0) {
+                                return "y = " + slope() + "x " + "+ " + yIntercept();
+                        } else {
+                                return "y = " + slope() + "x " + "- " + Math.abs(yIntercept());
+                        }
+                }else {return null;}
         }
-
-
-
 
 
         /* Returns a String of the coordinate point on the line that has the given x value, with
