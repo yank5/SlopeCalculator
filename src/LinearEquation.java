@@ -1,4 +1,6 @@
 import java.lang.Math;
+import java.util.Scanner;
+
 public class LinearEquation{
         /* Instance Variables */
         private int x1;
@@ -6,9 +8,46 @@ public class LinearEquation{
         private int x2;
         private int y2;
 
-        public void test(int x1, int y1, int x2, int y2){
-                this.x1=x1; this.y1=y1; this.x2=x2; this.y2=y2;
+        public void tb(){
+                Scanner ab = new Scanner(System.in);
+                System.out.print("first coordinate(separate with comma): ");
+                String test1 = ab.nextLine();
+                int idxO = test1.indexOf(',');
+                int idx1 = test1.indexOf(')');
+                int idx2 = test1.indexOf('(');
+                String f1 = test1.substring(idx2 + 1, idxO);
+                String f2 = test1.substring(idxO + 1, idx1);
+
+                System.out.print("second coordinate(separate with comma): ");
+                String test2 = ab.nextLine();
+                int idx3 = test2.indexOf(',');
+                int idx4 = test2.indexOf(')');
+                int idx5 = test2.indexOf('(');
+                String f3 = test2.substring(idx5 + 1, idx3);
+                String f4 = test2.substring(idx3 + 1, idx4);
+
+                int d1 = Integer.parseInt(f1.strip());
+                int d2 = Integer.parseInt(f2.strip());
+
+                int d3 = Integer.parseInt(f3.strip());
+                int d4 = Integer.parseInt(f4.strip());
+
+                if (d1 == d3) {
+                        System.out.println("These points are on a vertical line: x=" + d1);
+                        System.exit(0);
+                }
+                if (d2 == d4) {
+                        System.out.println("These points are on a horizontal line: x=" + d2);
+                        System.exit(0);
+                }
+
+                this.x1=d1; this.y1=d2; this.x2=d3; this.y2=d4;
         }
+
+
+
+
+
 
         /* Creates a LinearEquation object */
 /* PRECONDITION: x1 and x2 are NOT equal (client programs are responsible for ensuring
@@ -22,31 +61,35 @@ public LinearEquation(int x1, int y1, int x2, int y2)
 
 
         public double distance(){
-                return Math.sqrt(Math.pow(x2-x1,2)+Math.pow(y2-y1,2));
+                return Math.sqrt(Math.pow((x2-x1),2)+Math.pow((y2-y1),2));
         }
 
 
 
         /* Calculates and returns the y-intercept of the line between (x1, y1) and
            (x2, y2), rounded to the nearest hundredth */
+//        public double yIntercept() {
+//                if (slope() * x1 != y1) {
+//                        if (slope() * x1 > y2) {
+//                                return y1 - slope() * x1;
+//                        } else{return
+//                } if(slope()*x2<y2){
+//                        return slope() * x1 - y1;
+//                }
+//        }
+//
         public double yIntercept(){
                 if(slope()*x1!=y1){
-                        if(slope()*x1>y2){
-                                return roundedToHundredth(y1-slope()*x1);
-                        } else {
-                                return roundedToHundredth(slope()*x1-y1);
-                        }
-                } else{
-                        return 0;
-                }
+                        return y1-slope()*x1;
+                } else {return 0;}
         }
-
 
 
         /* Calculates and returns the slope of the line between (x1, y1) and
            (x2, y2), rounded to the nearest hundredth */
         public double slope(){
-                return roundedToHundredth(((double)y2)-((double)y1)/((double)x2)-((double)x1));
+                double a1=x1; double a2=x2; double b1=y1; double b2=y2;
+                return ((b2)-(b1))/((a2)-(a1));
         }
 
 
@@ -75,14 +118,13 @@ public LinearEquation(int x1, int y1, int x2, int y2)
             HINT: Absolute value might be helpful for printing negative y-intercepts as
                    subtraction!
          */
-        char DD;
+
         public String equation(){
-                if(yIntercept()>=0){
-                        DD = '+';
-                } else {
-                        DD = '-';
-                }
-               return "y = "+slope()+"x"+DD+(Math.abs(yIntercept()));
+                if(yIntercept()!=0)
+                        if(yIntercept()>0)
+                                return "y = "+slope()+"x "+"+ "+yIntercept();
+                        else return "y = "+slope()+"x "+"- "+Math.abs(yIntercept());
+                else return null;
         }
 
 
@@ -92,7 +134,7 @@ public LinearEquation(int x1, int y1, int x2, int y2)
         /* Returns a String of the coordinate point on the line that has the given x value, with
            both x and y coordinates as decimals to the nearest hundredth, e.g (-5.0, 6.75) */
         public String coordinateForX(double xValue){
-                return "("+xValue+", "+roundedToHundredth(((slope()*xValue)+yIntercept()))+")";
+                return "("+xValue+", "+((slope()*xValue)+yIntercept())+")";
         }
 
 
@@ -122,11 +164,18 @@ public LinearEquation(int x1, int y1, int x2, int y2)
           equation(), slope(), yIntercept(), distance().
 
           */
+        public void bt() {
+                Scanner ab = new Scanner(System.in);
+                System.out.print("enter an x value: ");
+                Double cc = ab.nextDouble();
+                System.out.println(coordinateForX(cc));
+        }
+
         public String lineInfo(){
                 return "points: ("+x1+", "+y1+") "+"and ("+x2+", "+y2+")\n" +
                         "\nequation: "+equation() +
-                        "\nslope of equation: "+roundedToHundredth(slope()) +
-                        "\nyint of equation: "+roundedToHundredth(yIntercept()) +
-                        "\ndistance between points: "+roundedToHundredth(distance());
+                        "\nslope of equation: "+slope() +
+                        "\nyint of equation: "+yIntercept() +
+                        "\ndistance between points: "+distance();
         }
 }
