@@ -8,7 +8,7 @@ public class LinearEquation{
         private int x2;
         private int y2;
 
-        public void tb(){
+        public void start(){
                 Scanner ab = new Scanner(System.in);
                 System.out.print("first coordinate(separate with comma): ");
                 String test1 = ab.nextLine();
@@ -33,11 +33,11 @@ public class LinearEquation{
                 int d4 = Integer.parseInt(f4.strip());
 
                 if (d1 == d3) {
-                        System.out.println("These points are on a vertical line: x=" + d1);
+                        System.out.println("These points are on a vertical line: x = " + d1);
                         System.exit(0);
                 }
                 if (d2 == d4) {
-                        System.out.println("These points are on a horizontal line: x=" + d2);
+                        System.out.println("These points are on a horizontal line: y = " + d2);
                         System.exit(0);
                 }
 
@@ -87,8 +87,12 @@ public LinearEquation(int x1, int y1, int x2, int y2)
 
         /* Calculates and returns the slope of the line between (x1, y1) and
            (x2, y2), rounded to the nearest hundredth */
+        double xslope;
+        double yslope;
         public double slope(){
                 double a1=x1; double a2=x2; double b1=y1; double b2=y2;
+                xslope = (b2-b1);
+                yslope = (a2-a1);
                 return ((b2)-(b1))/((a2)-(a1));
         }
 
@@ -119,21 +123,33 @@ public LinearEquation(int x1, int y1, int x2, int y2)
                    subtraction!
          */
 
-        public String equation(){
-                if(yIntercept()!=0) {
+        public String equation() {
+                char ab;
+                if(yIntercept()==0){
+                        return "y = " + roundedToHundredth(slope()) + "x";
+                }
+                if(roundedToHundredth(slope())==1||roundedToHundredth(slope())==-1){
+                        return "y = " + "x";
+                }
+                if (yIntercept() != 0) {
                         if (yIntercept() > 0) {
-                                return "y = " + slope() + "x " + "+ " + yIntercept();
+                                ab = '+';
                         } else {
-                                return "y = " + slope() + "x " + "- " + Math.abs(yIntercept());
+                                ab = '-';
                         }
-                }else {return null;}
+                } else {
+                        ab = '0';
+                }
+
+
+                return "y = " + roundedToHundredth(slope()) + "x " + ab + " " + roundedToHundredth(Math.abs(yIntercept()));
         }
 
 
         /* Returns a String of the coordinate point on the line that has the given x value, with
            both x and y coordinates as decimals to the nearest hundredth, e.g (-5.0, 6.75) */
         public String coordinateForX(double xValue){
-                return "("+xValue+", "+((slope()*xValue)+yIntercept())+")";
+                return "("+xValue+", "+(Math.abs(slope()*xValue)+Math.abs(yIntercept()))+")";
         }
 
 
@@ -166,15 +182,15 @@ public LinearEquation(int x1, int y1, int x2, int y2)
         public void bt() {
                 Scanner ab = new Scanner(System.in);
                 System.out.print("enter an x value: ");
-                Double cc = ab.nextDouble();
+                double cc = ab.nextDouble();
                 System.out.println(coordinateForX(cc));
         }
 
         public String lineInfo(){
                 return "points: ("+x1+", "+y1+") "+"and ("+x2+", "+y2+")\n" +
                         "\nequation: "+equation() +
-                        "\nslope of equation: "+slope() +
-                        "\nyint of equation: "+yIntercept() +
-                        "\ndistance between points: "+distance();
+                        "\nslope of equation: "+roundedToHundredth(slope()) +
+                        "\nyint of equation: "+roundedToHundredth(yIntercept()) +
+                        "\ndistance between points: "+roundedToHundredth(distance());
         }
 }
